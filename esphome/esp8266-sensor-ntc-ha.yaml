@@ -1,5 +1,5 @@
 esphome:
-  name: esphome-web-5c20f2
+  name: esphome-web
   friendly_name: ESPHome
 
 esp8266:
@@ -35,7 +35,7 @@ one_wire:
 sensor:
   - platform: dallas_temp
     #index: 0
-    name: "Temperatura Pokoj "
+    name: "Temperatura Pokoju "
     filters:
       - offset: -1.6   
 
@@ -63,14 +63,14 @@ sensor:
      b_constant: 3950
      reference_temperature: 25°C
      reference_resistance: 10kOhm
-    name: NTC Temperature W Pokoj
+    name: NTC Temperature W Pokoju
     filters:
       - median:
          window_size: 7
          send_every: 4
          send_first_at: 3
   - platform: wifi_signal # Reports the WiFi signal strength/RSSI in dB
-    name: "WiFi Signal Gościnny dB"
+    name: "WiFi Signal dB"
     id: wifi_signal_db
     update_interval: 60s
     entity_category: "diagnostic"
