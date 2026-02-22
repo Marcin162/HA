@@ -1,0 +1,32 @@
+# --- Bezpieczeństwo i Dane Wrażliwe ---
+# Pliki zawierające hasła WiFi, tokeny i klucze
+secrets.h
+secrets.yaml
+credentials.h
+*.env
+
+# --- Arduino / ESP8266 / ESP32 ---
+# Pliki generowane podczas kompilacji
+build/
+bin/
+*.hex
+*.elf
+*.bin
+
+# --- Visual Studio Code / PlatformIO ---
+.pio/
+.vscode/
+.clang-format
+
+# --- Home Assistant / ESPHome ---
+# Pliki tymczasowe i logi
+.storage/
+.cloud/
+*.log
+*.db
+*.db-shm
+*.db-wal
+
+# --- Systemowe ---
+.DS_Store
+Thumbs.db
