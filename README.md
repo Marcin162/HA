@@ -13,7 +13,7 @@ Zaawansowany system monitorowania kotłowni oparty na współpracy dwóch mikrok
 * **Sprzęt:** Arduino Nano (Akwizycja danych) + ESP8266 (Gateway WiFi).
 * **Funkcje:** Pomiar 4 temperatur NTC oraz 2 ciśnień (MPa) z precyzyjnym kluczowaniem zasilania czujników.
 * **Komunikacja:** UART (Protokół CSV).
-* 👉 [Zobacz szczegóły projektu](./esphome/esp32/esp8266-urt-odczyt-czujnikow/) 
+* 👉 [Zobacz szczegóły projektu](./esphome/esp8266/esp8266-urt-odczyt-czujnikow/) 
 
 
 
