@@ -26,6 +26,7 @@ bin/
 *.db
 *.db-shm
 *.db-wal
+.esphome/
 
 # --- Systemowe ---
 .DS_Store
