@@ -13,7 +13,7 @@ Zaawansowany system monitorowania kotłowni oparty na współpracy dwóch mikrok
 * **Sprzęt:** Arduino Nano (Akwizycja danych) + ESP8266 (Gateway WiFi).
 * **Funkcje:** Pomiar 4 temperatur NTC oraz 2 ciśnień (MPa) z precyzyjnym kluczowaniem zasilania czujników.
 * **Komunikacja:** UART (Protokół CSV).
-* 👉 [Zobacz szczegóły projektu](./esphome/esp32/spiker/) *(Upewnij się, że ścieżka jest poprawna)*
+* 👉 [Zobacz szczegóły projektu](./esphome/esp32/esp8266-urt-odczyt-czujnikow/) 
 
 
 
@@ -22,13 +22,13 @@ Interaktywny asystent głosowy z obsługą słowa budzącego (Wake Word).
 * **Sprzęt:** ESP32 + Mikrofon I2S + Wzmacniacz I2S.
 * **Funkcje:** Bezpośrednia komunikacja głosowa z Home Assistant, inteligentne wyciszanie multimediów podczas nasłuchu.
 * **Komunikacja:** I2S (Cyfrowy przesył dźwięku).
-* 👉 [Zobacz szczegóły projektu](./esphome/esp32/spiker/)
+* 👉 [Zobacz szczegóły projektu](./esphome/esp32/speaker/)
 
 ### 🌡️ 3. Inteligentny Termometr Pokojowy
 Podwójny pomiar temperatury dla systemów ogrzewania.
 * **Sprzęt:** ESP8266 + DS18B20 + Termistor NTC (podłogowy).
 * **Funkcje:** Optymalizacja zużycia energii, precyzyjne filtrowanie medianowe dla czujników analogowych.
-* 👉 [Zobacz szczegóły projektu](./esphome/esp8266/esp_czujnik_temperatur/)
+* 👉 [Zobacz szczegóły projektu](./esphome/esp8266/esp-sensor-ntc-ha/)
 
 ---
 
