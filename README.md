@@ -28,7 +28,7 @@ Interaktywny asystent głosowy z obsługą słowa budzącego (Wake Word).
 Podwójny pomiar temperatury dla systemów ogrzewania.
 * **Sprzęt:** ESP8266 + DS18B20 + Termistor NTC (podłogowy).
 * **Funkcje:** Optymalizacja zużycia energii, precyzyjne filtrowanie medianowe dla czujników analogowych.
-* 👉 [Zobacz szczegóły projektu](./esphome/esp8266/esp-sensor-ntc-ha/)
+* 👉 [Zobacz szczegóły projektu](./esphome/esp8266/esp8266-sensor-ntc-ha/)
 
 ---
 
