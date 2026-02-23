@@ -1,0 +1,161 @@
+esphome:
+  name: esphome-web-3eeebf
+  friendly_name: ESPHome Gaz
+  
+esp8266:
+  board: d1_mini_lite
+
+
+logger:
+  level: VERBOSE
+  baud_rate: 0
+
+uart:
+    id: uart_0
+    tx_pin: GPIO1
+    rx_pin: GPIO3
+    baud_rate: 9600
+    debug:                                            
+      direction: BOTH                                  
+      dummy_receiver: true                           
+      after:
+        delimiter: "\n"                             #\r
+      sequence:
+        - lambda: |- 
+            UARTDebug::log_string(direction, bytes);        
+            std::string str(bytes.begin(), bytes.end());  
+            ESP_LOGI("UART", "Received data: %s", str.c_str()); // Drukowanie otrzymanych danych
+            id(rawString).publish_state(str.c_str());
+            float sensorTEMP1 = 0;
+            float sensorTEMP2 = 0;
+            float sensorTEMP3 = 0;
+            float sensorTEMP4 = 0;
+            float sensorCISNIENIE1 = 0;
+            float sensorCISNIENIE2 = 0;
+            if (sscanf(str.c_str(), "%f,%f,%f,%f,%f,%f", &sensorTEMP1, &sensorTEMP2, &sensorTEMP3, &sensorTEMP4, &sensorCISNIENIE1, &sensorCISNIENIE2) == 6 ){
+              id(temp1).publish_state(sensorTEMP1);
+              id(temp2).publish_state(sensorTEMP2);
+              id(temp3).publish_state(sensorTEMP3);
+              id(temp4).publish_state(sensorTEMP4);
+              id(cisnienie1).publish_state(sensorCISNIENIE1);
+              id(cisnienie2).publish_state(sensorCISNIENIE2);
+            }
+# Enable Home Assistant API
+api:
+
+# Allow Over-The-Air updates
+ota:
+- platform: esphome
+
+# Allow provisioning Wi-Fi via serial
+#improv_serial:
+
+wifi:
+  ssid: ""
+  password: ""
+  # Set up a wifi access point
+  #ap:
+
+# In combination with the `ap` this allows the user
+# to provision wifi credentials to the device via WiFi AP.
+captive_portal:
+
+   
+
+sensor:
+  - platform: wifi_signal # Reports the WiFi signal strength/RSSI in dB
+    name: "WiFi Signal dB Gaz"
+    id: wifi_signal_db_gaz
+    update_interval: 60s
+    entity_category: "diagnostic"
+
+  - platform: copy # Reports the WiFi signal strength in %
+    source_id: wifi_signal_db_gaz
+    name: "WiFi Signal Percent Gaz"
+    filters:
+      - lambda: return min(max(2 * (x + 100.0), 0.0), 100.0);
+    unit_of_measurement: "Signal Gaz %"
+    entity_category: "diagnostic"
+
+  - platform: template
+    name: "Czujnik temperatury 1"
+    id: temp1
+    unit_of_measurement: "°C"
+    device_class: "temperature"
+    filters:
+    - quantile:
+        window_size: 10
+        send_every: 5
+        send_first_at: 4
+        quantile: .9
+
+  - platform: template
+    name: "Czujnik temperatury 2"
+    id: temp2
+    unit_of_measurement: "°C"
+    device_class: "temperature"
+    filters:
+    - quantile:
+        window_size: 7
+        send_every: 4
+        send_first_at: 3
+        quantile: .9
+
+  - platform: template
+    name: "Czujnik temperatury 3"
+    id: temp3
+    unit_of_measurement: "°C"
+    device_class: "temperature"
+    filters:
+    - quantile:
+        window_size: 7
+        send_every: 4
+        send_first_at: 3
+        quantile: .9
+
+  - platform: template
+    name: "Czujnik temperatury 4"
+    id: temp4
+    unit_of_measurement: "°C"
+    device_class: "temperature"
+    filters:
+    - quantile:
+        window_size: 7
+        send_every: 4
+        send_first_at: 3
+        quantile: .9
+
+  - platform: template
+    name: "Czujnik cisnienia 1"
+    id: cisnienie1   
+    unit_of_measurement: "MPa" 
+    filters:
+        - multiply: 2
+
+  - platform: template
+    name: "Czujnik cisnienia 2"
+    id: cisnienie2 
+    unit_of_measurement: "MPa" 
+    filters:
+        - multiply: 2
+
+text:     
+  - platform: template
+    name: "otrzymane dane"
+    id: rawString
+    optimistic: true
+    min_length: 0
+    max_length: 100
+    mode: text
+
+
+button:
+  - platform: template
+    name: "Sprawdz czujniki"
+    on_press:
+      - uart.write: "on\n"
+            
+interval:
+  - interval: 10s
+    then:
+       - uart.write: "on\n"
