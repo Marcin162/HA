@@ -22,7 +22,7 @@ Interaktywny asystent głosowy z obsługą słowa budzącego (Wake Word).
 * **Sprzęt:** ESP32 + Mikrofon I2S + Wzmacniacz I2S.
 * **Funkcje:** Bezpośrednia komunikacja głosowa z Home Assistant, inteligentne wyciszanie multimediów podczas nasłuchu.
 * **Komunikacja:** I2S (Cyfrowy przesył dźwięku).
-* 👉 [Zobacz szczegóły projektu](./esphome/esp32/speaker/)
+* 👉 [Zobacz szczegóły projektu](./esphome/esp32/Speaker/)
 
 ### 🌡️ 3. Inteligentny Termometr Pokojowy
 Podwójny pomiar temperatury dla systemów ogrzewania.
