@@ -1,0 +1,125 @@
+esphome:
+  name: esphome-web-dbb86b
+  friendly_name: ESPHome
+
+esp8266:
+  board: d1_mini
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: ""
+
+            
+
+ota:
+  - platform: esphome
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+
+
+captive_portal:
+
+i2c:
+  sda: GPIO 04
+  scl: GPIO 05
+  scan: true
+  id: i2c_a
+sensor:
+  - platform: bmp280_i2c
+    temperature:
+      id: temperatura
+      name: "Temperatura"
+      oversampling: 16x
+    pressure:
+      name: "Ciśnienie"
+      id: cisnienie
+    
+    i2c_id: i2c_a  
+    address: 0x77
+    update_interval: 60s
+
+  - platform: template
+    name: "Ciśnienie na poziomie morza"
+    lambda: |-
+      const float STANDARD_ALTITUDE = 555; //  in meters, see note
+      return id(cisnienie).state / powf(1 - ((0.0065 * STANDARD_ALTITUDE) /
+        (id(temperatura).state + (0.0065 * STANDARD_ALTITUDE) + 273.15)), 5.257); // in hPa
+    update_interval: 30s
+    unit_of_measurement: 'hPa'
+    icon: mdi:gauge
+
+
+  - platform: adc
+    id: source_sensor
+    #attenuation: 5db
+    pin: A0
+    filters:
+      - multiply: 3.1
+    update_interval: never
+
+  - platform: resistance
+    sensor: source_sensor
+    configuration: UPSTREAM                   #DOWNSTREAM
+    resistor: 10kOhm
+    name: Resistance
+    id: resistance_sensor
+
+  
+    
+  - platform: ntc
+    sensor: resistance_sensor
+    calibration:
+     b_constant: 3950
+     reference_temperature: 25°C
+     reference_resistance: 10kOhm
+    name: NTC Temperature
+    filters:
+      - median:
+         window_size: 7
+         send_every: 4
+         send_first_at: 3
+  - platform: duty_time  # obliczanie czasu działania 
+    id: Time_sensor_PIR
+    name: "Czas ruchu"
+    # Support logical sources (optional): 'binary_sensor'
+    sensor: ruch_
+    # ... EOR 'lambda'
+   # lambda: "return id(sensor_pir).mode != CLIMATE_MODE_OFF;"
+    # Restore (optional, default: False)
+    restore: false
+    # Sensor for last turn-on time (optional)
+    #last_time:
+     # name: My Climate Last Turn-On Time
+
+
+
+switch:
+  - platform: gpio
+    pin: GPIO16
+    id: ntc_vcc    
+
+interval:
+  - interval: 60s
+    then:   
+       - switch.turn_on: ntc_vcc
+       - component.update: source_sensor
+       - switch.turn_off: ntc_vcc
+
+binary_sensor:
+  - platform: gpio
+    pin: 
+       number: GPIO15
+       mode:
+          input: true
+          #pullup: True
+    name: Ruch
+    id: ruch_
+    device_class: motion     
