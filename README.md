@@ -30,12 +30,20 @@ Podwójny pomiar temperatury dla systemów ogrzewania.
 * **Funkcje:** Optymalizacja zużycia energii, precyzyjne filtrowanie medianowe dla czujników analogowych.
 * 👉 [Zobacz szczegóły projektu](./esphome/esp8266/esp8266-sensor-ntc-ha/)
 
+### 🌡️ 4. Multisensor Środowiskowy 
+Wielofunkcyjny moduł monitorujący warunki w pomieszczeniu oraz obecność domowników.
+* **Sprzęt:** ESP8266 (D1 Mini) + BMP280 + PIR + NTC.
+* **Funkcje:** Pomiar temperatury i ciśnienia (z przeliczeniem na poziom morza - 555m n.p.m.), detekcja ruchu z licznikiem czasu aktywności (`duty_time`).
+* **Innowacja:** Kluczowanie zasilania NTC przez GPIO dla maksymalnej precyzji odczytu.
+* 👉 [Zobacz szczegóły projektu](./esphome/esp8266/Multisensor/)
+
 ---
 
 ## 🛠️ Technologie i Narzędzia
 - **Hardware:** ESP32, ESP8266 (Wemos D1 Mini), Arduino Nano.
 - **Software:** ESPHome, Home Assistant, C++/Arduino.
 - **Protokóły:** API ESPHome, I2S, UART, OneWire.
+- **Algorytmy:** Przeliczanie ciśnienia barometrycznego, filtry medianowe, sscanf UART parsing.
 
 ---
 
