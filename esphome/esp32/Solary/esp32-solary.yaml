@@ -1,0 +1,356 @@
+esphome:
+
+  name: esphome-web-fa1698
+
+  friendly_name: ESPHome Solar
+
+  on_boot:
+
+    - number.set:
+
+       id: delta_t_solarach
+
+       value: !lambda 'return id(delta_t);'
+
+
+
+
+
+esp32:
+
+  board: esp32dev
+
+  framework:
+
+    type: arduino
+
+
+
+# Enable logging
+
+logger:
+
+
+
+# Enable Home Assistant API
+
+api:
+
+  
+
+
+
+ota:
+
+  - platform: esphome
+
+
+
+wifi:
+
+  ssid: ""
+
+  password: ""
+
+
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+
+
+
+
+
+captive_portal:
+
+#dallas:
+
+   # - pin: 27
+
+
+
+
+
+globals:
+
+   - id: delta_t
+
+     type: float 
+
+     restore_value: no
+
+     initial_value: '0'
+
+
+
+switch:
+
+  - platform: gpio
+
+    pin: 16
+
+    name: "Pompa solarna" 
+
+    id: pompa_solarna 
+
+  
+
+# włącznik NTC  
+
+  - platform: gpio
+
+    pin: 22
+
+    id: ntc_vcc
+
+  - platform: gpio
+
+    pin: 14
+
+    id: ntc_solar
+
+
+
+
+
+
+
+
+
+sensor:
+
+
+
+
+
+  - platform: adc
+
+    id: source_sensor
+
+    attenuation: 12db
+
+    pin: GPIO35
+
+    update_interval: never
+
+
+
+  - platform: adc
+
+    id: source_sensor_solar
+
+    attenuation: 12db
+
+    pin: GPIO34
+
+    update_interval: never
+
+
+
+
+
+  - platform: resistance
+
+    sensor: source_sensor
+
+    configuration: UPSTREAM #DOWNSTREAM
+
+    resistor: 10kOhm
+
+    name: "Resistance Sensor Boiler"
+
+    id: resistance_sensor_boiler
+
+  
+
+  - platform: resistance
+
+    sensor: source_sensor_solar
+
+    configuration:  UPSTREAM #DOWNSTREAM
+
+    resistor: 10kOhm
+
+    name: "Resistance Sensor Solar"
+
+    id: resistance_sensor_solar
+
+    
+
+  - platform: ntc
+
+    sensor: resistance_sensor_boiler
+
+    calibration:
+
+      b_constant: 3850
+
+      reference_temperature: 25°C
+
+      reference_resistance: 10kOhm
+
+    name: "Temperatura Boiler NTC"
+
+    filters:
+
+      - median:
+
+         window_size: 7
+
+         send_every: 4
+
+         send_first_at: 3
+
+    id: temperatura_boiler
+
+
+
+  - platform: ntc
+
+    sensor: resistance_sensor_solar
+
+    calibration:
+
+      b_constant: 3850
+
+      reference_temperature: 25°C
+
+      reference_resistance: 10kOhm
+
+    name: "Temperatura Solar NTC"
+
+    filters:
+
+      - median:
+
+         window_size: 7
+
+         send_every: 4
+
+         send_first_at: 3
+
+    on_value_range:
+
+        - above: 80.0
+
+          then:
+
+            - switch.turn_on: pompa_solarna 
+
+        - below: 20.0
+
+          then:
+
+            - switch.turn_off: pompa_solarna
+
+           # lambda: !lambda |-
+
+            # - if (return id(temperatura_boiler).state < 50);
+
+                 #condition:
+
+    on_value:
+
+      then:
+
+        lambda:  |-
+
+          if (id(temperatura_boiler).state > 80) id(delta_t) = 10;
+
+          if (id(delta_t) > 10)   id(pompa_solarna).turn_on();        
+
+          if (id(delta_t) < 2)    id(pompa_solarna).turn_off();
+
+          
+
+
+
+    id: temperatura_solar
+
+
+
+number: 
+
+  - platform: template
+
+    name: "Delta temperatury"
+
+    id: delta_t_solarach
+
+    min_value: -40
+
+    max_value: 40
+
+    step: 0.1
+
+    optimistic: true
+
+    
+
+  
+
+
+
+interval:
+
+  - interval: 5 s
+
+  
+
+    then:
+
+      #- lambda: !lambda |-
+
+         #  id(delta_t) = id(temperatura_solar).state - id(temperatura_boiler).state;
+
+
+
+      - switch.turn_on: ntc_vcc
+
+      - switch.turn_on: ntc_solar
+
+      #- delay: 100ms
+
+      - component.update: source_sensor
+
+      - component.update: source_sensor_solar
+
+      - switch.turn_off: ntc_vcc
+
+      - switch.turn_off: ntc_solar
+
+      - globals.set:
+
+          id: delta_t
+
+          value: !lambda 'return (id(temperatura_solar).state - id(temperatura_boiler).state);'
+
+      #- lambda: !lambda |-
+
+       #   id (delta_t_solarach).state = id (delta_t);
+
+      - number.set:
+
+          id: delta_t_solarach
+
+          value: !lambda 'return id(delta_t);'
+
+      - uart.write:  delta_t
+
+      - uart.write: "/n"    
+
+ 
+
+
+
+uart:
+
+  tx_pin: 1
+
+  rx_pin: 3
+
+  baud_rate: 9600
+
+  debug:
+
+
+
