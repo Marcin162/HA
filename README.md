@@ -37,6 +37,11 @@ Wielofunkcyjny moduł monitorujący warunki w pomieszczeniu oraz obecność domo
 * **Innowacja:** Kluczowanie zasilania NTC przez GPIO dla maksymalnej precyzji odczytu.
 * 👉 [Zobacz szczegóły projektu](./esphome/esp8266/Multisensor/)
 
+### ☀️ 5. Sterownik Solarny PWM
+System zarządzania kolektorem słonecznym z dynamiczną regulacją przepływu (ESP32 + Arduino).
+**Sprzęt:** ESP32 + NTC
+**Funkcje** Pomiar temperatury, komunikacja  URT
+
 ---
 
 ## 🛠️ Technologie i Narzędzia
