@@ -42,6 +42,11 @@ System zarządzania kolektorem słonecznym z dynamiczną regulacją przepływu (
 **Sprzęt:** ESP32 + NTC
 **Funkcje** Pomiar temperatury, komunikacja  URT
 
+### 🔥 6. Sterownik Kotła OpenTherm (Termo Control)
+Mój najbardziej zaawansowany projekt sterowania ogrzewaniem.
+* **Sprzęt:** ESP8266 + OpenTherm Shield.
+* **Funkcje:** Pełna modulacja palnika, diagnostyka błędów, statystyki pracy kotła.
+* 👉 [Zobacz szczegóły projektu](./esphome/esp8266/Termo_Control/)
 ---
 
 ## 🛠️ Technologie i Narzędzia
