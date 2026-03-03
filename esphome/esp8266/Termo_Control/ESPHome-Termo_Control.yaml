@@ -1,0 +1,177 @@
+esphome:
+  name: esphome-web-164ae0
+  friendly_name: ESPHome Termo Control
+  min_version: 2024.11.0
+  name_add_mac_suffix: false
+
+esp8266:
+  board: d1_mini_lite
+
+# Enable logging
+logger:
+  level: VERBOSE
+  baud_rate: 0
+  logs:
+    component: ERROR
+    sensor: WARN
+    opentherm.output: INFO
+# Enable Home Assistant API
+api:
+
+# Allow Over-The-Air updates
+ota:
+- platform: esphome
+
+wifi:
+  ssid: ""
+  password: ""
+
+opentherm:
+  in_pin: D2
+  out_pin: D1
+  
+number:
+  - platform: opentherm
+    t_set:
+      name: "kociol gaz temperatura wody zasilajacej"
+      id: kociol_gaz_temperatura_wody_zasilajacej
+    t_dhw_set: 
+      name: "Nastawa temperatury ciepłej wody użytkowej gaz"
+    max_rel_mod_level: 
+      name: "Maksymalny względny poziom modulacji"  
+    otc_hc_ratio:
+      name: "Współczynnik krzywej cieplnej OTC"
+
+switch:
+  - platform: opentherm
+    ch_enable: 
+      name: "Włączone centralne ogrzewanie"
+    dhw_enable:
+      name: "Włączona ciepła woda użytkowa" 
+    otc_active: 
+      name: "Aktywna kompensacja temperatury zewnętrznej"
+    
+binary_sensor:
+  - platform: opentherm
+    fault_indication:
+      name: "Wskazanie błędu"
+
+    ch_active: 
+      name: "Centralne ogrzewanie aktywne"
+
+    dhw_active: 
+      name: "Ciepła woda użytkowa aktywna"
+
+    flame_on: 
+      name: "Płomień włączony"
+
+    diagnostic_indication: 
+      name: "Zdarzenie diagnostyczne"
+
+    control_type_on_off: 
+      name: "Typ sterowania jest włączony/wyłączony"
+      
+    dhw_storage_tank: 
+      name: "Konfiguracja: zasobnik CWU"
+
+
+    low_water_pressure:
+      name:  "Usterka niskiego ciśnienia wody"
+
+    flame_fault: 
+      name: "Usterka płomienia"
+
+    air_pressure_fault: 
+      name: "Usterka ciśnienia powietrza"
+
+    water_over_temp: 
+      name: "Nadmierna temperatura wody"
+
+
+sensor:
+  - platform: opentherm
+    rel_mod_level:
+      name: "Względny poziom modulacji (%)"
+
+    ch_pressure: 
+      name: "Ciśnienie wody w obiegu CO (bar)"
+
+    dhw_flow_rate: 
+      name: "Natężenie przepływu wody w obiegu CWU (l/min)"
+
+    t_boiler: 
+      name: "Temperatura wody kotłowej (°C)"
+
+    t_dhw: 
+      name: "Temperatura CWU (°C)"
+
+    t_ret: 
+      name: "Temperatura wody powrotnej (°C)"
+
+    t_exhaust: 
+      name: "Temperatura spalin z kotła (°C)"
+
+    fan_speed: 
+      name: "Prędkość wentylatora kotła (RPM)"
+
+    fan_speed_setpoint: 
+      name: "Nastawa prędkości wentylatora kotła (RPM)"
+
+    flame_current: 
+      name: "Prąd płomienia kotła (μA)"
+
+    burner_starts: 
+      name: "Liczba uruchomień palnika"
+
+    ch_pump_starts: 
+      name: "Liczba uruchomień pompy CO"
+
+    dhw_pump_valve_starts: 
+      name: "Liczba uruchomień pompy/zaworu CWU"
+
+    dhw_burner_starts: 
+      name: "Liczba uruchomień palnika w trybie CWU"
+
+    burner_operation_hours: 
+      name: "Liczba godzin, przez które palnik pracuje"
+
+    ch_pump_operation_hours: 
+      name: "Liczba godzin, przez które pompa CO pracowała"
+
+    dhw_pump_valve_operation_hours: 
+      name: "Liczba godzin, przez które pompa CWU pracowała lub zawór CWU był otwarty"
+
+    dhw_burner_operation_hours: 
+      name: "Liczba godzin, przez które palnik pracuje w trybie CWU"
+
+    t_dhw_set_ub: 
+      name: "Górna granica regulacji nastawy CWU (°C)"
+
+    t_dhw_set_lb: 
+      name: "Dolna granica do regulacji nastawy CWU (°C)"
+
+    max_t_set_ub: 
+      name: "Górna granica do regulacji maksymalnej wartości zadanej CO (°C)"
+    
+
+    max_t_set_lb: 
+      name: "Dolna granica do regulacji maksymalnej wartości zadanej CO (°C)"
+
+    t_dhw_set: 
+      name: "Nastawa temperatury ciepłej wody użytkowej (°C)"
+
+    max_t_set: 
+      name: "Maksymalna dopuszczalna nastawa wody CO (°C)"
+
+    opentherm_version_device: 
+      name: "Wersja OpenTherm zaimplementowana przez urządzenie"
+
+    device_type: 
+      name: "Typ produktu urządzenia"
+
+    device_version: 
+      name: "Wersja produktu urządzenia"
+
+    device_id: 
+      name: "Kod identyfikacyjny urządzenia"
+
