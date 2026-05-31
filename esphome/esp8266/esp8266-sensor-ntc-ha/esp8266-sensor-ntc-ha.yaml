@@ -10,7 +10,7 @@ logger:
 
 # Enable Home Assistant API
 api:
-
+ 
 
 ota:
  - platform: esphome
@@ -32,6 +32,12 @@ one_wire:
     pin: GPIO13
 #dallas:
 #  - pin: GPIO13
+text_sensor:
+  - platform: wifi_info
+    ip_address:
+      name: "ESP  - IP"
+  - platform: version
+    name: "ESP  - Wersja ESPHome"
 sensor:
   - platform: dallas_temp
     #index: 0
@@ -82,14 +88,35 @@ sensor:
       - lambda: return min(max(2 * (x + 100.0), 0.0), 100.0);
     unit_of_measurement: "Signal %"
     entity_category: "diagnostic" 
+
+  - platform: wifi_signal
+    name: "WiFi Signal Sensor P_N"
+    update_interval: 60s
+
+  - platform: uptime
+    name: "ESP  - Uptime"
+    update_interval: 60s
+
 switch:
   - platform: gpio
     pin: GPIO12
-    id: ntc_vcc     
+    id: ntc_vcc   
+   - platform: restart
+    name: "Restart"  
+    id: restarta     
 interval:
   - interval: 30s
     then:   
        - switch.turn_on: ntc_vcc
-       #- delay: 100ms
+       - delay: 10ms
        - component.update: source_sensor
-       - switch.turn_off: ntc_vcc    
+       - switch.turn_off: ntc_vcc   
+   # 2. Interwał restartu awaryjnego przy braku połączenia    
+  - interval: 15min
+    then:
+      - if:
+          condition:
+            not:
+              api.connected:
+          then:
+            - switch.turn_on: restarta        
