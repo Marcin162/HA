@@ -20,7 +20,49 @@ Projekt zaawansowanego kontrolera temperatury opartego na układzie **ESP8266**,
 | **NTC 10K (Data)** | `A0` | Odczyt napięcia z dzielnika |
 | **Rezystor 10kΩ** | `A0` -> `GND` | Rezystor odniesienia (Konfiguracja DOWNSTREAM) |
 
+  
+### Diagram Połączeń ESPHome 
 
+```text
+               +-----------------------------------+
+               |          WEMOS D1 MINI            |
+               |                                   |
+               |    [3V3]   [GND]   [D4]   [A0]    |   [D8]
+               +------+-------+------+------+------+----+
+                      |       |      |      |           |
+                      |       |      |      |           |
+                      |       |      |      |           |
+    +-----------------+       |      |      |           |
+    |                         |      |      |           |
+ [Rezystor]                   |      |      |           |
+  4.7 kOhm                    |      |      |           |
+    |                         |      |      |           |
+    +-------------------------|------+      |           |
+    |                         |             |           |
++---+---+                     |             |           |
+| VCC   |                     |             |           |
+| DATA  +---------------------+             |           |
+| GND   +---------------------+             |           |
++-------+                                   |           |
+Czujnik DALLAS                              |           |
+(np. DS18B20)                               |           |
+                                            |           |
+                                            |           |
+                         +------------------+           |
+                         |                              |
+                         |                              |
+                   +-----+-----+                  +-----+-----+
+                   | Rezystor  |                  |    NTC    |
+                   |  10 kOhm  |                  | Termistor |
+                   +-----+-----+                  +-----+-----+
+                         |                              |
+                         +---------------+--------------+
+                                         |
+                                         |
+                                       [GND] 
+```
+                                       
+![alt text](image.png)
 
 ## 💻 Logika Pracy (Automation)
 Urządzenie nie wykonuje pomiarów w trybie ciągłym, co wydłuża żywotność komponentów. Co **30 sekund** wykonywana jest następująca sekwencja:
