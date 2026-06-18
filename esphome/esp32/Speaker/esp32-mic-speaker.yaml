@@ -21,8 +21,8 @@ ota:
     id: ota_esphome
 
 wifi:
-  ssid: "TP-Link_C762"
-  password: "12835096"
+  ssid: ""
+  password: ""
   min_auth_mode: WPA2
 
   ap:
