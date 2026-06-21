@@ -1,0 +1,51 @@
+esphome:
+  name: esphome-web-5fd63e
+  friendly_name: ESPHome Web Schody
+
+esp8266:
+  board: d1_mini_lite
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+   key: !secret key
+
+ota:
+  - platform: esphome
+
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: !secret ap_ssid
+    password: !secret ap_password
+
+captive_portal:
+    
+switch:
+- platform: gpio
+  pin: GPIO5
+  id: schody_oswietlenie
+  name: "Schody oświetlenie"    
+
+sensor:
+  - platform: wifi_signal # Reports the WiFi signal strength/RSSI in dB
+    name: "WiFi Signal dB Schody"
+    id: wifi_signal_db_schody
+    update_interval: 60s
+    entity_category: "diagnostic"
+
+  - platform: copy # Reports the WiFi signal strength in %
+    source_id: wifi_signal_db_schody
+    name: "WiFi Signal Percent Schody"
+    filters:
+      - lambda: return min(max(2 * (x + 100.0), 0.0), 100.0);
+    unit_of_measurement: "Signal Schody %"
+    entity_category: "diagnostic"
