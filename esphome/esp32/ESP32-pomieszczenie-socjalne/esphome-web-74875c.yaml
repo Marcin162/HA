@@ -1,0 +1,145 @@
+esphome:
+  name: esphome-web-74875c
+
+esp32:
+  board: esp32dev
+  framework:
+    type: esp-idf #arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+  - platform: esphome
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: !secret ap_ssid
+    password: !secret ap_password
+
+captive_portal:
+sensor:
+  - platform: dht
+    pin: GPIO16
+    
+    temperature:
+      name: "Temperatura w Garderobie"
+    humidity:
+      name: "Wilgotnosc w Garderobie"
+    model: DHT11
+    update_interval: 60s
+    
+
+  - platform: adc
+    id: swiatlo_sensor
+    attenuation: 12db
+    pin: GPIO35
+    #raw: true
+    #filters:
+    #   - multiply: 3.3   #0.00095238 #3.9/4095, for attenuation 11db
+    update_interval: 10s
+
+  - platform: resistance
+    sensor: swiatlo_sensor
+    configuration:   UPSTREAM    #  DOWNSTREAM
+    resistor: 10kOhm
+    name: Resistance Sensor garderoba
+    id: resistance_sensor
+
+  - platform: adc
+    id: source_sensor
+    attenuation: 12db
+    pin: GPIO32
+    #raw: true
+    #filters:
+      # - multiply: 3.3   #0.00095238 #3.9/4095, for attenuation 11db
+    update_interval: never
+
+  - platform: resistance
+    sensor: source_sensor
+    configuration:          UPSTREAM                    #DOWNSTREAM
+    resistor: 10kOhm
+    name: Resistance Sensor NTC Garderoba
+    id: resistance_sensor_NTC
+    
+  - platform: ntc
+    sensor: resistance_sensor_NTC
+    calibration:
+      b_constant: 3850
+      reference_temperature: 25°C
+      reference_resistance: 10kOhm
+    name: NTC Temperatura Garderoba
+    filters:
+      - median:
+         window_size: 7
+         send_every: 4
+         send_first_at: 3
+  - platform: wifi_signal # Reports the WiFi signal strength/RSSI in dB
+    name: "WiFi Signal Garderoba dB"
+    id: wifi_signal_db
+    update_interval: 60s
+    entity_category: "diagnostic"
+
+  - platform: copy # Reports the WiFi signal strength in %
+    source_id: wifi_signal_db
+    name: "WiFi Signal Percent Garderoba"
+    filters:
+      - lambda: return min(max(2 * (x + 100.0), 0.0), 100.0);
+    unit_of_measurement: "Signal %"
+    entity_category: "diagnostic"
+
+  - platform: duty_time  # obliczanie czasu działania 
+    id: Time_sensor_PIR
+    name: "Czas uruchomienia czujnika ruchu w garderobie"
+    # Support logical sources (optional): 'binary_sensor'
+    sensor: Sensor_pir
+    # ... EOR 'lambda'
+   # lambda: "return id(sensor_pir).mode != CLIMATE_MODE_OFF;"
+    # Restore (optional, default: False)
+    restore: false
+    # Sensor for last turn-on time (optional)
+    #last_time:
+     # name: My Climate Last Turn-On Time
+
+
+binary_sensor:
+  - platform: gpio
+    pin: GPIO14
+    id: Sensor_pir
+    name: "PIR Sensor Garderoba"
+    device_class: motion
+
+switch:
+  - platform: gpio
+    pin: GPIO27
+    name: "Czujnik swiatla"
+    inverted: false #true  
+    id: swiatlo_vcc   
+
+  - platform: gpio
+    pin: GPIO26
+    id: ntc_vcc    
+    
+interval:
+  - interval: 30s
+    then:   
+       - switch.turn_on: ntc_vcc
+       - delay: 100ms
+       - component.update: source_sensor
+       - switch.turn_off: ntc_vcc
+esp32_ble_tracker:
+  scan_parameters:
+    interval: 1100ms
+    window: 1100ms
+    active: true
+
+bluetooth_proxy:
+  active: true
+  connection_slots: 3
