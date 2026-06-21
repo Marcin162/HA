@@ -1,4 +1,4 @@
- # ☀️ ESPHome - Kotłownia Monitoring (esphome-kotlownia_01)
+ # 🔥 ESPHome - Kotłownia Monitoring (esphome-kotlownia_01)
 
 ## Opis projektu
 
@@ -17,7 +17,7 @@ Urządzenie mierzy temperatury w kluczowych punktach systemu centralnego ogrzewa
 - Czujnik binarny stanu pompy studziennej
 - Pomiar siły sygnału WiFi
 
-## Sprzęt
+## 🏗️ Sprzęt
 
 ### Użyte piny ESP32:
 
@@ -87,10 +87,8 @@ Zasilanie jest włączane tylko na czas pomiaru, aby zminimalizować samogrzanie
 - Używaj tylko niskiego napięcia (3.3V) dla czujników.
 - Sprawdź poprawność podłączenia rezystorów dzielnika napięcia.
 
+
 ---
-
-**Autor:** MarcinJ  
-**Data utworzenia:** czerwiec 2026  
-**Wersja:** 1.0
-
-J
+**Autor:** [Marcin162](https://github.com/Marcin162)  
+**Status:** Projekt aktywny - Monitorowanie kotłowni  
+**Licencja:** MIT
