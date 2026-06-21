@@ -66,10 +66,10 @@ Czujnik DALLAS                              |           |
 
 ## 💻 Logika Pracy (Automation)
 Urządzenie nie wykonuje pomiarów w trybie ciągłym, co wydłuża żywotność komponentów. Co **30 sekund** wykonywana jest następująca sekwencja:
-1. Aktywacja pinu `GPIO12` (podanie zasilania na dzielnik NTC).
+1. Aktywacja pinu `GPIO02` (podanie zasilania na dzielnik NTC).
 2. Odczyt wartości z pinu analogowego `A0`.
 3. Przeliczenie napięcia na oporność, a następnie na temperaturę (B-constant: 3950).
-4. Dezaktywacja pinu `GPIO12`.
+4. Dezaktywacja pinu `GPIO02`.
 
 ## 🚀 Instalacja
 1. Skopiuj repozytorium do swojego folderu ESPHome.
