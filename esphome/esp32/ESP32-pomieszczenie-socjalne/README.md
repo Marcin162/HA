@@ -28,6 +28,7 @@ Projekt ESPHome dla urządzenia monitorującego warunki w garderobie na bazie ES
 | **GND**    | Wszystkie masy           | Ground       | Wspólna masa                   |
 
 **Dodatkowe elementy:**
+
 - Rezystor 10 kΩ między GPIO35 a 3.3V (dla fotorezystora – konfiguracja UPSTREAM)
 - Rezystor 10 kΩ między GPIO32 a 3.3V (dla NTC)
 
@@ -53,4 +54,4 @@ Projekt ESPHome dla urządzenia monitorującego warunki w garderobie na bazie ES
 
                ## Schemat podłączenia
 
-![Schemat podłączenia - Garderoba](Gnz7j.jpg)
+![Schemat podłączenia - Garderoba](Gnz7j.jpg)![Zdjęcie urządzenia](Gnz7j.jpg)
