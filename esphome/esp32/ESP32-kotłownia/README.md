@@ -1,4 +1,4 @@
-# ESPHome - Kotłownia Monitoring (esphome-kotlownia_01)
+ # ☀️ ESPHome - Kotłownia Monitoring (esphome-kotlownia_01)
 
 ## Opis projektu
 
