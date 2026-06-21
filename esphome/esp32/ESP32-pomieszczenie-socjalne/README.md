@@ -55,3 +55,8 @@ Projekt ESPHome dla urządzenia monitorującego warunki w garderobie na bazie ES
                ## Schemat podłączenia
 
 ![Schemat podłączenia - Garderoba](Gnz7j.jpg)![Zdjęcie urządzenia](Gnz7j.jpg)
+
+---
+**Autor:** [Marcin162](https://github.com/Marcin162)  
+**Status:** Projekt aktywny - Monitorowanie kotłowni  
+**Licencja:** MIT
