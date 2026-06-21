@@ -50,3 +50,7 @@ Projekt ESPHome dla urządzenia monitorującego warunki w garderobie na bazie ES
                | GPIO27 ---+     |  ← Zasilanie fotorezystora
                | GPIO26 ---+     |  ← Zasilanie NTC
                +-----------------+
+
+               ## Schemat podłączenia
+
+![Schemat podłączenia - Garderoba](Gnz7j.jpg)
