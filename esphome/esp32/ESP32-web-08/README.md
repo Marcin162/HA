@@ -30,7 +30,15 @@ Projekt **ESPHome** dla gabinetu – zaawansowane sterowanie oświetleniem LED ,
 | **Oświetlenie półki**    | GPIO14        | Dodatkowe oświetlenie LED |
 | **Czujnik szarości**     | GPIO05        | Wejście binarne |
 
+**Zasilanie:**
+- Wszystkie moduły zasilane **3.3V** lub **5V** (zależnie od specyfikacji)
+- LD2410 zwykle 5V, ale komunikacja 3.3V (tolerancyjny)
 ---
+
+### Schemat Połączeń (Realistyczny)
+
+![ESP32 Gabinet - Schemat Połączeń](\\d7LRG.jpg)
+
 
 # 🎮  Dostępne Efekty Oświetlenia
 ## Statek_rufa & Statek_maszt
