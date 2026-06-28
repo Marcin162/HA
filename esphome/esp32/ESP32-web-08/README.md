@@ -43,30 +43,30 @@ Projekt **ESPHome** dla gabinetu – zaawansowane sterowanie oświetleniem LED ,
 # 🎮  Dostępne Efekty Oświetlenia
 ## Statek_rufa & Statek_maszt
 
-Wolne Przyciemnianie – płynne pulsowanie co 10s
-Szybkie miganie – dynamiczny efekt
-Efekt losowy – chaotyczne zmiany
-Migotanie – subtelny efekt „świeczki”
+- Wolne Przyciemnianie – płynne pulsowanie co 10s
+- Szybkie miganie – dynamiczny efekt
+- Efekt losowy – chaotyczne zmiany
+- Migotanie – subtelny efekt „świeczki”
 
 
 # 🤖 Automatyzacje
 
-Po zachodzie słońca (sun.is_below_horizon):
-Przy wykryciu osoby (presence_cz) → włącza oba światła na 60% jasności
+- Po zachodzie słońca (sun.is_below_horizon):
+- Przy wykryciu osoby (presence_cz) → włącza oba światła na 60% jasności
 
-Przy wschodzie słońca → wyłącza światła
-Brak osoby → światła zawsze wyłączone (oszczędność energii)
+- Przy wschodzie słońca → wyłącza światła
+- Brak osoby → światła zawsze wyłączone (oszczędność energii)
 
 
 # 📡 Dodatkowe Możliwości
 
-Bluetooth Proxy – 3 sloty połączeń, aktywny skan co ~1,1s
-LD2410 – pełna konfiguracja bramek, progów energii, timeoutu
-Kalibracja światła – polynomial degree 2 na podstawie rzeczywistych pomiarów
+- Bluetooth Proxy – 3 sloty połączeń, aktywny skan co ~1,1s
+- LD2410 – pełna konfiguracja bramek, progów energii, timeoutu
+- Kalibracja światła – polynomial degree 2 na podstawie rzeczywistych pomiarów
 
 # 🚀 Instalacja
 
-Skopiuj pliki do ESPHome
-Uzupełnij secrets.yaml (WiFi, lokalizacja, klucz szyfrowania)
-Skompiluj i wgraj
-Dodaj urządzenie do Home Assistant
+- Skopiuj pliki do ESPHome
+- Uzupełnij secrets.yaml (WiFi, lokalizacja, klucz szyfrowania)
+- Skompiluj i wgraj
+- Dodaj urządzenie do Home Assistant
