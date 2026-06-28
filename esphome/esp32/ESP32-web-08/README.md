@@ -37,7 +37,7 @@ Projekt **ESPHome** dla gabinetu – zaawansowane sterowanie oświetleniem LED ,
 
 ### Schemat Połączeń (Realistyczny)
 
-![ESP32 Gabinet - Schemat Połączeń](esphome\esp32\ESP32-web-08\d7LRG.jpg)
+![ESP32 Gabinet - Schemat Połączeń](d7LRG.jpg)
 
 
 # 🎮  Dostępne Efekty Oświetlenia
