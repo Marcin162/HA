@@ -1,42 +1,48 @@
 # 🎙️ ESP32 Voice Assistant Satellite (I2S Audio)
 
-Projekt inteligentnego satelity głosowego opartego na **ESP32**, w pełni zintegrowanego z **Home Assistant Assist**. Urządzenie obsługuje technologię **Wake Word** (słowo budzące), umożliwiając bezdotykową interakcję z inteligentnym domem.
+Projekt inteligentnego **satelity głosowego** opartego na **ESP32-S3**, w pełni zintegrowanego z **Home Assistant Assist**. Urządzenie obsługuje Wake Word (słowo budzące), dwukierunkowe audio I2S oraz automatyczne wyciszanie multimediów podczas nasłuchiwania.
+
+---
 
 ## 🚀 Główne Funkcje
-- **Obsługa Wake Word**: Ciągłe nasłuchiwanie słowa kluczowego (np. "Okay Nabucasa").
-- **Dwukierunkowe Audio I2S**:
-  - **Wejście**: Obsługa zewnętrznych mikrofonów cyfrowych (np. INMP441).
-  - **Wyjście**: Obsługa zewnętrznych przetworników DAC/Wzmacniaczy (np. MAX98357A).
-- **Automatyka wyciszania (Muting)**: System automatycznie wyłącza odtwarzacz multimedialny podczas nasłuchiwania (`on_listening`), aby uniknąć sprzężeń zwrotnych i poprawić rozpoznawanie mowy.
-- **Tryby serwisowe**: Wbudowane przyciski `Safe Mode` (tryb awaryjny) oraz `Factory Reset`.
+
+- **Wake Word** – ciągłe nasłuchiwanie słowa kluczowego (np. „Okay Nabucasa”)
+- **Dwukierunkowe audio I2S**:
+  - Wejście: cyfrowy mikrofon (np. INMP441)
+  - Wyjście: DAC / wzmacniacz (np. MAX98357A)
+- **Automatyczne muting** multimediów podczas nasłuchiwania (`on_listening`)
+- **Mixer audio** – osobne ścieżki dla ogłoszeń (TTS) i multimediów
+- **Resampling** dla optymalnej jakości TTS i muzyki
+- **Tryby serwisowe**: Safe Mode i Factory Reset
+- **Wsparcie PSRAM** (octal) dla lepszej wydajności
+
+---
 
 ## 🛠️ Specyfikacja Sprzętowa (Pinout)
 
-Urządzenie korzysta z dwóch magistrali I2S:
-
 ### 🎤 Mikrofon (I2S Input)
-| Pin ESP32 | Funkcja |
-| :--- | :--- |
-| **GPIO32** | BCLK |
-| **GPIO33** | LRCLK |
-| **GPIO35** | DIN (Data In) |
+| Pin ESP32-S3 | Funkcja          |
+|--------------|------------------|
+| **GPIO4**    | BCLK             |
+| **GPIO3**    | LRCLK            |
+| **GPIO2**    | DIN (Data In)    |
 
 ### 🔊 Głośnik (I2S Output)
-| Pin ESP32 | Funkcja |
-| :--- | :--- |
-| **GPIO19** | BCLK |
-| **GPIO23** | LRCLK |
-| **GPIO22** | DOUT (Data Out) |
+| Pin ESP32-S3 | Funkcja          |
+|--------------|------------------|
+| **GPIO5**    | BCLK             |
+| **GPIO6**    | LRCLK            |
+| **GPIO7**    | DOUT (Data Out)  |
 
+---
 
+## 💻 Konfiguracja ESPHome
 
-## 💻 Instalacja i Konfiguracja
+### 1. Plik `secrets.yaml`
+Utwórz plik `secrets.yaml` w katalogu projektu:
 
-### 1. Przygotowanie plików
-Upewnij się, że w folderze z projektem znajduje się plik `secrets.yaml` z następującymi kluczami:
 ```yaml
 wifi_ssid: "Twoja_Nazwa_WiFi"
 wifi_password: "Twoje_Haslo"
-# Opcjonalnie dane dla Hotspotu (AP)
-ap_ssid: "Nazwa_Hotspotu_Awaryjnego"
-ap_password: "Haslo_Hotspotu"
+ap_ssid: "ESP32-Satellite-AP"
+ap_password: "HasloAwaryjne123"
