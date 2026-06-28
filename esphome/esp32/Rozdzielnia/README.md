@@ -22,7 +22,7 @@
 ## 📌 Schemat podłączeń
 
 ### Użyty sprzęt:
-- **Płytka**: ESP32 DevKit (board: esp32dev)
+-  **Płytka**: ESP32 DevKit (board: esp32dev)
 - **Czujniki**: NTC 10kΩ (B=3850)
 - **Rezystory referencyjne**: 10kΩ (1% zalecane)
 - **Zasilanie mostka**: 3.3V przez GPIO (z tranzystorem lub bezpośrednio)
